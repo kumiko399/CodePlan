@@ -1,0 +1,64 @@
+{
+  "name": "codeplan-desktop",
+  "version": "0.1.0",
+  "private": true,
+  "main": "main.cjs",
+  "description": "Local student planner",
+  "author": "kumiko399",
+  "scripts": {
+    "start": "electron .",
+    "package": "electron-builder --win nsis --x64"
+  },
+  "devDependencies": {
+    "electron": "45.0.0",
+    "electron-builder": "26.15.3"
+  },
+  "build": {
+    "electronDist": "node_modules/electron/dist",
+    "appId": "dev.codeplan.desktop",
+    "productName": "CodePlan",
+    "directories": {
+      "output": "../release/0.1.0"
+    },
+    "files": [
+      "*.cjs",
+      "assets/**/*",
+      "package.json"
+    ],
+    "extraResources": [
+      {
+        "from": "../frontend/dist",
+        "to": "ui"
+      },
+      {
+        "from": "../backend/target/codeplan-0.1.0.jar",
+        "to": "backend/app.jar"
+      },
+      {
+        "from": "../runtime/java",
+        "to": "java"
+      },
+      {
+        "from": "../runtime/mysql",
+        "to": "mysql"
+      },
+      {
+        "from": "../docs/THIRD_PARTY.md",
+        "to": "THIRD_PARTY.md"
+      }
+    ],
+    "win": {
+      "target": "nsis",
+      "signAndEditExecutable": false
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "deleteAppDataOnUninstall": false,
+      "createDesktopShortcut": true
+    },
+    "artifactName": "CodePlan-${version}-Windows-${arch}.${ext}"
+  },
+  "license": "SEE LICENSE IN LICENSE"
+}

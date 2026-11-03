@@ -1,0 +1,17 @@
+{
+  "name": "codeplan",
+  "version": "0.1.0",
+  "private": true,
+  "description": "A local-first planner for computer science students",
+  "scripts": {
+    "dev": "npm --prefix frontend run dev",
+    "build": "npm --prefix frontend run build",
+    "test": "node --test scripts/*.test.mjs desktop/*.test.cjs",
+    "desktop": "npm --prefix desktop start",
+    "package:win": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/package.ps1"
+  },
+  "devDependencies": {
+    "prettier": "3.9.10"
+  },
+  "license": "SEE LICENSE IN LICENSE"
+}

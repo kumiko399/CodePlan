@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dev.codeplan.mapper.PlannerMapper">
+  <select id="tasks" resultType="dev.codeplan.model.Models$Task">SELECT * FROM task ORDER BY plan_date, task_time, id</select>
+  <select id="task" resultType="dev.codeplan.model.Models$Task">SELECT * FROM task WHERE id=#{id}</select>
+  <insert id="insertTask">INSERT INTO task (id,title,category,plan_date,task_time,priority,notes,status,completed_at,problem_id,rule_id,occurrence_date,reminder_time,notified)
+    VALUES (#{id},#{title},#{category},#{planDate},#{taskTime},#{priority},#{notes},#{status},#{completedAt},#{problemId},#{ruleId},#{occurrenceDate},#{reminderTime},#{notified})</insert>
+  <update id="updateTask">UPDATE task SET title=#{title},category=#{category},plan_date=#{planDate},task_time=#{taskTime},priority=#{priority},notes=#{notes},status=#{status},completed_at=#{completedAt},problem_id=#{problemId},reminder_time=#{reminderTime},notified=#{notified} WHERE id=#{id}</update>
+  <delete id="deleteTask">DELETE FROM task WHERE id=#{id}</delete>
+  <select id="problems" resultType="dev.codeplan.model.Models$Problem">SELECT * FROM problem ORDER BY title,id</select>
+  <select id="problem" resultType="dev.codeplan.model.Models$Problem">SELECT * FROM problem WHERE id=#{id}</select>
+  <insert id="insertProblem">INSERT INTO problem (id,platform,number,title,url,difficulty,tags,notes,identity_key)
+    VALUES (#{id},#{platform},#{number},#{title},#{url},#{difficulty},#{tags},#{notes},#{identityKey})</insert>
+  <update id="updateProblem">UPDATE problem SET platform=#{platform},number=#{number},title=#{title},url=#{url},difficulty=#{difficulty},tags=#{tags},notes=#{notes},identity_key=#{identityKey} WHERE id=#{id}</update>
+  <delete id="deleteProblem">DELETE FROM problem WHERE id=#{id}</delete>
+  <select id="attempts" resultType="dev.codeplan.model.Models$Attempt">SELECT * FROM attempt ORDER BY attempted_at DESC,id</select>
+  <insert id="insertAttempt">INSERT INTO attempt (id,problem_id,task_id,attempted_at,result,minutes,notes)
+    VALUES (#{id},#{problemId},#{taskId},#{attemptedAt},#{result},#{minutes},#{notes})</insert>
+  <delete id="deleteAttempt">DELETE FROM attempt WHERE id=#{id}</delete>
+  <select id="reflections" resultType="dev.codeplan.model.Models$Reflection">SELECT * FROM reflection ORDER BY `day` DESC</select>
+  <insert id="insertReflection">INSERT INTO reflection (`day`,content) VALUES (#{day},#{content})</insert>
+  <delete id="deleteReflection">DELETE FROM reflection WHERE `day`=#{day}</delete>
+  <select id="rules" resultType="dev.codeplan.model.Models$Rule">SELECT * FROM repeat_rule ORDER BY start_date,id</select>
+  <insert id="insertRule">INSERT INTO repeat_rule (id,title,category,priority,notes,task_time,reminder_time,start_date,end_date,frequency,weekdays,problem_id,active,cursor_date)
+    VALUES (#{id},#{title},#{category},#{priority},#{notes},#{taskTime},#{reminderTime},#{startDate},#{endDate},#{frequency},#{weekdays},#{problemId},#{active},#{cursorDate})</insert>
+  <update id="updateRule">UPDATE repeat_rule SET title=#{title},category=#{category},priority=#{priority},notes=#{notes},task_time=#{taskTime},reminder_time=#{reminderTime},start_date=#{startDate},end_date=#{endDate},frequency=#{frequency},weekdays=#{weekdays},problem_id=#{problemId},active=#{active},cursor_date=#{cursorDate} WHERE id=#{id}</update>
+  <select id="settings" resultType="dev.codeplan.model.Models$Settings">SELECT * FROM app_setting WHERE id=1</select>
+  <update id="updateSettings">UPDATE app_setting SET language=#{language},theme=#{theme},color=#{color},repeat_enabled=#{repeatEnabled},reminders_enabled=#{remindersEnabled},auto_backup=#{autoBackup},backup_directory=#{backupDirectory},last_auto_backup=#{lastAutoBackup} WHERE id=1</update>
+  <delete id="clearAttempts">DELETE FROM attempt</delete>
+  <delete id="clearTasks">DELETE FROM task</delete>
+  <delete id="clearRules">DELETE FROM repeat_rule</delete>
+  <delete id="clearProblems">DELETE FROM problem</delete>
+  <delete id="clearReflections">DELETE FROM reflection</delete>
+</mapper>

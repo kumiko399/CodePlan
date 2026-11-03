@@ -1,0 +1,28 @@
+server:
+  address: 127.0.0.1
+  port: ${APP_PORT:18765}
+  error:
+    include-message: never
+spring:
+  datasource:
+    url: jdbc:mysql://127.0.0.1:${DB_PORT:13316}/codeplan?useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true
+    username: codeplan
+    password: ${DB_PASSWORD}
+    hikari:
+      maximum-pool-size: 4
+  sql:
+    init:
+      mode: always
+      encoding: UTF-8
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 21MB
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+    arg-name-based-constructor-auto-mapping: true
+app:
+  token: ${APP_TOKEN}
+  data-dir: ${APP_DATA_DIR:./.local}
