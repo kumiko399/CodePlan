@@ -32,7 +32,7 @@ public class ApiController {
     @DeleteMapping("/templates/{id}") public void deleteTemplate(@PathVariable String id) { planner.deleteTemplate(id); }
     @GetMapping("/templates/{id}/preview") public List<TaskInput> previewTemplate(@PathVariable String id,@RequestParam LocalDate day) { return planner.previewTemplate(id,day); }
     @PostMapping("/templates/{id}/create") public List<String> createTemplate(@PathVariable String id,@RequestBody Map<String,String> input) { return planner.createFromTemplate(id,LocalDate.parse(input.get("day")),input.get("requestId")); }
-    @GetMapping("/health") public Map<String,String> health() { return Map.of("status","ok","version","0.1.0"); }
+    @GetMapping("/health") public Map<String,String> health() { return Map.of("status","ok","version","0.1.1"); }
     @GetMapping("/workspace") public Map<String,Object> workspace() { return planner.workspace(); }
     @GetMapping("/tasks") public List<Task> tasks() { return planner.tasks(); }
     @PostMapping("/tasks") public Task createTask(@Valid @RequestBody TaskInput input) { return planner.saveTask(null,input); }

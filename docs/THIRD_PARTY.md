@@ -4,6 +4,8 @@ Review date: 2026-11-03. **Not a clearance to redistribute.** Original project s
 
 ## Source dependencies
 
+Source dependency added in 0.1.1 (reviewed 2026-11-05): lunar-javascript 1.7.7, MIT, copyright (c) 2018 6tail. The original license is preserved in [licenses/lunar-javascript-LICENSE.txt](licenses/lunar-javascript-LICENSE.txt). This component is loaded only for the home almanac. The source archive contains integration code and dependency manifests, not the library, its embedded Yi/Ji table, scraped materials or compiled bundles. Upstream documentation attributes the table to research on scraped website materials; the full data rights chain remains unverified. Review DATA_SOURCES.md before distributing bundled data or binaries. The existing project source license does not replace its MIT license.
+
 Exact npm versions and declared license metadata, including transitive dependencies, are listed in [DEPENDENCY_INVENTORY.md](DEPENDENCY_INVENTORY.md). Metadata is not a substitute for the actual package LICENSE/NOTICE files. Java dependencies are declared in `backend/pom.xml`; the final resolved Maven graph and all bundled JAR notices must be collected before binary distribution.
 
 | Component | Declared license / review point |

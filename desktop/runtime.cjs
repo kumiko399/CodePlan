@@ -70,7 +70,7 @@ function resolvePaths(root, resources) {
     mysqlHome: resources ? path.join(runtime, "mysql") : mysqlHome,
     jar: resources
       ? path.join(resources, "backend", "app.jar")
-      : path.join(root, "backend", "target", "codeplan-0.1.0.jar"),
+      : path.join(root, "backend", "target", "codeplan-0.1.1.jar"),
   };
 }
 async function launch({ root, dataDir, resources, onProgress = () => {} }) {

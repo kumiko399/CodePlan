@@ -63,6 +63,17 @@ try {
     return fs.existsSync(connectionFile);
   });
   const connection = JSON.parse(fs.readFileSync(connectionFile, "utf8"));
+  const sourceVersion = JSON.parse(
+    fs.readFileSync(path.join(root, "package.json"), "utf8"),
+  ).version;
+  const health = await (
+    await fetch(`http://127.0.0.1:${connection.port}/api/health`)
+  ).json();
+  assert.equal(
+    health.version,
+    sourceVersion,
+    "Installed backend matches source version",
+  );
   assert.equal((await fetch(connection.origin)).status, 200);
   assert.equal((await fetch(`${connection.origin}/api/tasks`)).status, 401);
   const pages = await (
@@ -114,6 +125,42 @@ try {
     async () =>
       evaluate("document.querySelector('h1')?.textContent.includes('每一步')"),
     15000,
+  );
+  await until(() => evaluate('!!document.querySelector(".home-almanac")'));
+  assert.equal(
+    await evaluate(
+      'document.querySelector(".home-almanac").textContent.includes("农历") && document.querySelectorAll(".almanac-activities li").length > 0',
+    ),
+    true,
+  );
+  const almanacDate = await evaluate(
+    'document.querySelector(".home-almanac").dataset.date',
+  );
+  await evaluate(
+    'document.querySelector("[data-testid=almanac-prev]").click()',
+  );
+  await until(
+    async () =>
+      (await evaluate(
+        'document.querySelector(".home-almanac").dataset.date',
+      )) !== almanacDate,
+  );
+  await evaluate(
+    'document.querySelector("[data-testid=almanac-today]").click()',
+  );
+  await until(
+    async () =>
+      (await evaluate(
+        'document.querySelector(".home-almanac").dataset.date',
+      )) === almanacDate,
+  );
+  assert.ok(
+    fs.existsSync(
+      path.join(
+        path.dirname(exe),
+        "resources/licenses/lunar-javascript-LICENSE.txt",
+      ),
+    ),
   );
   const state = await evaluate(`(async () => {
     const c = await window.codeplan.connection();
@@ -233,6 +280,7 @@ try {
           "no JAVA_HOME or MYSQL_HOME",
           "system-only PATH",
           "renderer isolation",
+          "home almanac, lunar entries, date navigation and bundled MIT license",
           "calendar status legend and daily completion progress",
           "authenticated API",
           "expanded workspace, trash, focus and desktop drafts",

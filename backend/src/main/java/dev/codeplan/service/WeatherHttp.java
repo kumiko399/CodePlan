@@ -20,7 +20,7 @@ public class WeatherHttp {
             connection.setConnectTimeout(8000);
             connection.setReadTimeout(12000);
             connection.setInstanceFollowRedirects(false);
-            connection.setRequestProperty("User-Agent", "CodePlan/0.1.0 personal-noncommercial");
+            connection.setRequestProperty("User-Agent", "CodePlan/0.1.1 personal-noncommercial");
             connection.setRequestProperty("Accept", "application/json");
             if (connection.getResponseCode() == 429) throw new IllegalStateException("WEATHER_RATE_LIMITED");
             if (connection.getResponseCode() != 200) throw new IllegalStateException("WEATHER_UNAVAILABLE");

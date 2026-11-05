@@ -1,5 +1,5 @@
 <script setup>
-import { computed, ref, watch } from "vue";
+import { computed, ref, watch, defineAsyncComponent } from "vue";
 import { useI18n } from "vue-i18n";
 import { ElMessage } from "element-plus";
 import { usePlanner } from "../store.js";
@@ -16,6 +16,9 @@ import CalendarBoard from "../components/CalendarBoard.vue";
 import { upcomingTasks } from "../lib/deadlines.js";
 import DraftNotice from "../components/DraftNotice.vue";
 import WeatherSummary from "../components/WeatherSummary.vue";
+const HomeAlmanac = defineAsyncComponent(
+  () => import("../components/HomeAlmanac.vue"),
+);
 const props = defineProps({ mode: String }),
   store = usePlanner(),
   { t, locale } = useI18n();
@@ -226,79 +229,86 @@ async function saveReflection() {
 }
 </script>
 <template>
-  <header class="page-header">
-    <div>
-      <p class="eyebrow">
-        {{
-          new Date().toLocaleDateString(locale === "zh" ? "zh-CN" : "en-US", {
-            year: "numeric",
-            month: "long",
-            day: "numeric",
-            weekday: "long",
-          })
-        }}
-      </p>
-      <h1>{{ mode === "today" ? t("welcome") : t(mode) }}</h1>
-      <p>{{ t(`${mode}Subtitle`) }}</p>
-    </div>
-    <div class="page-actions">
-      <el-button v-if="mode === 'tasks'" @click="templatesOpen = true"
-        >📋 {{ t("templates") }}</el-button
-      >
-      <el-button v-if="mode === 'tasks'" @click="trashOpen = true"
-        >🗑 {{ t("trash") }} ({{ store.trash.length }})</el-button
-      >
-      <el-button
-        v-if="mode === 'today'"
-        data-testid="save-data"
-        size="large"
-        :loading="savingData"
-        :disabled="store.loading"
-        :title="t('saveDataHint')"
-        @click="saveData"
-        >💾 {{ t("saveData") }}</el-button
-      >
-      <el-button data-testid="add-task" type="primary" size="large" @click="add"
-        >＋ {{ t("addTask") }}</el-button
-      >
-    </div>
-  </header>
-  <p
-    v-if="mode === 'today'"
-    class="save-status"
-    :class="{ 'save-error': saveFailed }"
-    role="status"
-    aria-live="polite"
-  >
-    {{ saveStatus }}
-  </p>
-  <WeatherSummary v-if="mode === 'today'" />
-  <div v-if="mode === 'today'" class="summary-grid">
-    <div class="summary-card">
-      <span>{{ t("planned") }}</span
-      ><strong
-        >{{ todayTasks.length }}<small> / {{ t("tasks") }}</small></strong
-      >
-    </div>
-    <div class="summary-card">
-      <span>{{ t("completed") }}</span
-      ><strong>{{ done }}<small class="accent">✓</small></strong>
-    </div>
-    <div class="summary-card">
-      <span>{{ t("completion") }}</span
-      ><strong>{{
-        todayTasks.length
-          ? Math.round((done / todayTasks.length) * 100) + "%"
-          : "—"
-      }}</strong>
-      <div class="progress-track">
-        <i
-          :style="{
-            width: todayTasks.length
-              ? (done / todayTasks.length) * 100 + '%'
-              : '0%',
-          }"
-        ></i>
+  <div :class="{ 'home-overview': mode === 'today' }">
+    <header class="page-header">
+      <div>
+        <p class="eyebrow">
+          {{
+            new Date().toLocaleDateString(locale === "zh" ? "zh-CN" : "en-US", {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+              weekday: "long",
+            })
+          }}
+        </p>
+        <h1>{{ mode === "today" ? t("welcome") : t(mode) }}</h1>
+        <p>{{ t(`${mode}Subtitle`) }}</p>
+      </div>
+      <div class="page-actions">
+        <el-button v-if="mode === 'tasks'" @click="templatesOpen = true"
+          >📋 {{ t("templates") }}</el-button
+        >
+        <el-button v-if="mode === 'tasks'" @click="trashOpen = true"
+          >🗑 {{ t("trash") }} ({{ store.trash.length }})</el-button
+        >
+        <el-button
+          v-if="mode === 'today'"
+          data-testid="save-data"
+          size="large"
+          :loading="savingData"
+          :disabled="store.loading"
+          :title="t('saveDataHint')"
+          @click="saveData"
+          >💾 {{ t("saveData") }}</el-button
+        >
+        <el-button
+          data-testid="add-task"
+          type="primary"
+          size="large"
+          @click="add"
+          >＋ {{ t("addTask") }}</el-button
+        >
+      </div>
+    </header>
+    <p
+      v-if="mode === 'today'"
+      class="save-status"
+      :class="{ 'save-error': saveFailed }"
+      role="status"
+      aria-live="polite"
+    >
+      {{ saveStatus }}
+    </p>
+    <HomeAlmanac v-if="mode === 'today'" />
+    <WeatherSummary v-if="mode === 'today'" />
+    <div v-if="mode === 'today'" class="summary-grid">
+      <div class="summary-card">
+        <span>{{ t("planned") }}</span
+        ><strong
+          >{{ todayTasks.length }}<small> / {{ t("tasks") }}</small></strong
+        >
+      </div>
+      <div class="summary-card">
+        <span>{{ t("completed") }}</span
+        ><strong>{{ done }}<small class="accent">✓</small></strong>
+      </div>
+      <div class="summary-card">
+        <span>{{ t("completion") }}</span
+        ><strong>{{
+          todayTasks.length
+            ? Math.round((done / todayTasks.length) * 100) + "%"
+            : "—"
+        }}</strong>
+        <div class="progress-track">
+          <i
+            :style="{
+              width: todayTasks.length
+                ? (done / todayTasks.length) * 100 + '%'
+                : '0%',
+            }"
+          ></i>
+        </div>
       </div>
     </div>
   </div>

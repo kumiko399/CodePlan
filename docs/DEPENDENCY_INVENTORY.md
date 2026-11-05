@@ -1,5 +1,7 @@
 # npm 依赖许可元数据清单
 
+2026-11-05 本地开发新增：frontend / lunar-javascript / 1.7.7 / MIT / 运行时（首页异步加载）。精确版本见 frontend/package-lock.json，版权与原文见 licenses/lunar-javascript-LICENSE.txt；宜忌数据发布复核见 DATA_SOURCES.md。以下为首次发布时的原有锁文件清单。
+
 核对日期：2026-11-03。由三个 package-lock.json 的 packages 条目生成，含传递依赖。仅为锁文件自报许可元数据，不是法律审核、漏洞扫描、完整 SBOM 或许可证全文集合；发布前核对实际包的 LICENSE/NOTICE，开发依赖也可能进入构建产物。Java 和桌面运行库见 THIRD_PARTY.md。
 
 | 范围 | 包 | 版本 | 声明许可 | 用途 |

@@ -1,6 +1,6 @@
 {
   "name": "codeplan-desktop",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "main": "main.cjs",
   "description": "Local student planner",
@@ -18,7 +18,7 @@
     "appId": "dev.codeplan.desktop",
     "productName": "CodePlan",
     "directories": {
-      "output": "../release/0.1.0"
+      "output": "../release/0.1.1"
     },
     "files": [
       "*.cjs",
@@ -31,7 +31,7 @@
         "to": "ui"
       },
       {
-        "from": "../backend/target/codeplan-0.1.0.jar",
+        "from": "../backend/target/codeplan-0.1.1.jar",
         "to": "backend/app.jar"
       },
       {
@@ -45,6 +45,14 @@
       {
         "from": "../docs/THIRD_PARTY.md",
         "to": "THIRD_PARTY.md"
+      },
+      {
+        "from": "../docs/DATA_SOURCES.md",
+        "to": "DATA_SOURCES.md"
+      },
+      {
+        "from": "../docs/licenses",
+        "to": "licenses"
       }
     ],
     "win": {

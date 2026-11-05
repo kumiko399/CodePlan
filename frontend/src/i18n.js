@@ -211,7 +211,7 @@ const zh = {
   restored: "恢复完成",
   operationRunning: "正在处理，请稍候…",
   about: "关于",
-  version: "版本 0.1.0",
+  version: "版本 0.1.1",
   aboutText:
     "无需账号。任务、笔记与数据库保存在本机。应用退出后，不再发送通知。",
   maintenanceError:
@@ -457,7 +457,7 @@ const en = {
   restored: "Restore complete",
   operationRunning: "Working, please wait…",
   about: "About",
-  version: "Version 0.1.0",
+  version: "Version 0.1.1",
   aboutText:
     "No account required. Tasks, notes and the database stay on this device. Notifications stop when the app exits.",
   maintenanceError:

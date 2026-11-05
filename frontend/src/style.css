@@ -454,6 +454,58 @@ a:focus-visible {
   gap: 24px;
   margin-bottom: 29px;
 }
+.home-overview {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 300px;
+  column-gap: 24px;
+  margin-bottom: 24px;
+  align-items: start;
+}
+.home-overview > .page-header {
+  grid-column: 1;
+  grid-row: 1;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-bottom: 18px;
+}
+.home-overview > .page-header .page-actions {
+  justify-content: flex-start;
+  flex-shrink: 1;
+}
+.home-overview > .save-status {
+  grid-column: 1;
+  grid-row: 2;
+  margin: 0 0 16px;
+}
+.home-overview > .home-almanac {
+  grid-column: 2;
+  grid-row: 1 / 5;
+}
+.home-overview > .weather-summary {
+  grid-column: 1;
+  grid-row: 3;
+  min-width: 0;
+}
+.home-overview > .summary-grid {
+  grid-column: 1;
+  grid-row: 4;
+  min-width: 0;
+  margin-bottom: 0;
+}
+@media (max-width: 1279px) {
+  .home-overview {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .home-overview > * {
+    width: 100%;
+    min-width: 0;
+  }
+  .home-overview > .home-almanac {
+    margin: 8px 0 24px;
+  }
+}
 .page-header p:not(.eyebrow) {
   font-size: 13px;
   color: var(--muted);
